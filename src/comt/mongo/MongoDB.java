@@ -8,6 +8,11 @@ public class MongoDB {
         MongoClient mongoClient = MongoClients.create();
         for (String s : mongoClient.listDatabaseNames()) {
             System.out.println(s);
+            mongoClient.getDatabase(s);
+            for(String c : mongoClient.getDatabase(s).listCollectionNames()) {
+                System.out.println("\t"+c);
+                System.out.println("\t\t"+mongoClient.getDatabase(s).getCollection(c).countDocuments());
+            }
         }
     }
 }
