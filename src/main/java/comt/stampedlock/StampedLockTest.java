@@ -1,18 +1,20 @@
 package comt.stampedlock;
 
-import java.util.Random;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.StampedLock;
 
 public class StampedLockTest {
     private static final StampedLock sl = new StampedLock();
+    private static final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private static long ws = 0;
 
     public static void main(String[] args) {
         Thread r = new Thread(StampedLockTest::report);
         r.start();
-        new Thread(StampedLockTest::read).start();
-        new Thread(StampedLockTest::read).start();
-        new Thread(StampedLockTest::read).start();
-        new Thread(StampedLockTest::read).start();
+//        new Thread(StampedLockTest::read).start();
+//        new Thread(StampedLockTest::read).start();
+//        new Thread(StampedLockTest::read).start();
+//        new Thread(StampedLockTest::read).start();
         new Thread(StampedLockTest::read).start();
         new Thread(StampedLockTest::write).start();
         try {
@@ -34,24 +36,23 @@ public class StampedLockTest {
     }
 
     private static void read() {
-        long stamp = 0;
         try {
-            Thread.sleep(new Random().nextInt(5000));
-            stamp = sl.readLock();
-            System.out.println("locked with " + stamp);
-            Thread.sleep(4000);
+            //ws = sl.readLock();
+            rwl.readLock().lock();
+            System.out.println("locked with " + ws);
+            Thread.sleep(5000);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            sl.unlockRead(stamp);
-            System.out.println("unlocked with " + stamp);
         }
     }
 
     private static void write() {
         long stamp = 0;
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
+            System.out.println("unlocking read");
+            rwl.readLock().unlock();
+            //sl.unlockRead(ws);
             System.out.println("writing lock attempt");
             stamp = sl.writeLock();
             System.out.println("locked for writing with " + stamp);
