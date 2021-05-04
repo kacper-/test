@@ -16,7 +16,7 @@ public class MapReduce {
         Map<String, Integer> map = list.parallelStream().
                 reduce(new HashMap<>(), MapReduce::accumulator, MapReduce::combinator);
         for (String key : map.keySet())
-            System.out.println(String.format("%s = %d", key, map.get(key)));
+            System.out.printf("%s = %d%n", key, map.get(key));
     }
 
     private static Map<String, Integer> accumulator(Map<String, Integer> a, String i) {
@@ -28,6 +28,7 @@ public class MapReduce {
     }
 
     private static Map<String, Integer> combinator(Map<String, Integer> a, Map<String, Integer> b) {
+        System.out.printf("a = %d; b = %d%n", a.size(), b.size());
         return a;
     }
 }
