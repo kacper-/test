@@ -8,8 +8,7 @@ public class Runner {
     public static void main(String[] args) {
 
         List<String> list = Arrays.asList("a", "b", "c", "d", "e", "f");
-
-        Stage<String, String> source = new Stage<>(new Supplier<>() {
+        Supplier<String> supplier = new Supplier<>() {
             int count = 0;
 
             @Override
@@ -18,17 +17,14 @@ public class Runner {
                     return null;
                 return list.get(count++);
             }
-        }) {
-            @Override
-            public String process(String s) {
-                return s;
-            }
         };
 
-        Stage<String, String> stage = new Stage<>(source) {
+        Stage<String, String> stage = new Stage<>(supplier) {
             @Override
             public String process(String s) {
-                return s;
+                if (s != null)
+                    return s.toUpperCase();
+                return null;
             }
         };
 
