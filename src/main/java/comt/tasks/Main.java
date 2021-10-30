@@ -1,32 +1,25 @@
 package comt.tasks;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 public class Main {
 
     public static void main(String args[]) {
-        Runner runner = new Runner();
-        runner.setVal(1);
+        Holder holder = new Holder();
 
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.schedule(runner, 0, TimeUnit.SECONDS);
+        Runner r1 = new Runner(holder, "R1");
+        Runner r2 = new Runner(holder, "R2");
 
         try {
-            Thread.sleep(500);
+            run(r1, r2, holder);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
-        System.out.println(runner.getVal());
+    private static void run(Runner r1, Runner r2, Holder holder) throws InterruptedException {
+        new Thread(r1).start();
+        new Thread(r2).start();
 
-        service.shutdown();
-        try {
-            service.awaitTermination(2, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        service.shutdownNow();
+        Thread.sleep(500);
+        holder.update();
     }
 }
