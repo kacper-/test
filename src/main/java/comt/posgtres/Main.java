@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://127.0.0.1:5432/db";
+        String url = "jdbc:postgresql://172.16.216.128:5432/db";
         try {
             Connection conn = DriverManager.getConnection(url, "postgres", "postgres");
             conn.close();
