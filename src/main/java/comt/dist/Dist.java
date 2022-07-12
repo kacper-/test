@@ -9,18 +9,10 @@ public class Dist {
         for(int i=0;i<t.length;i++)
             t[i]=0;
         for(int i=0;i<ITER;i++)
-            t[rand5()]++;
+            t[new Random().nextInt(5)]++;
         for(int i=0;i<t.length;i++) {
             int diff = Math.abs((ITER/5) - t[i]);
             System.out.println(String.format("%d = %d diff = %f", i + 1, t[i], ((float)diff) / ((float) ITER/5)));
         }
-    }
-
-    public static int rand5() {
-        int rr = 0;
-        for(int i=0;i<5;i++) {
-            rr += new Random().nextInt(6) + 1;
-        }
-        return (rr % 5);
     }
 }
