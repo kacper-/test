@@ -1,2 +1,4 @@
-package comt.comt.mongo;public class Main {
+package comt.comt.mongo;
+
+public class Main {
 }
