@@ -5,7 +5,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] ars) {
         Deque<String> ll = new LinkedList<>();
-        Deque<String> ad = new ArrayDeque<>();
+        Deque<String> ad = new ArrayDeque<>(10000000);
 
         addElements(ll);
         addElements(ad);
@@ -19,10 +19,10 @@ public class Main {
     }
 
     private static void playStack(Deque<String> deque) {
-        for (int i = 0; i < 1000; i++) {
-            for (int j = 0; j < 1000; j++)
+        for (int i = 0; i < 10000; i++) {
+            for (int j = 0; j < 10000; j++)
                 deque.removeFirst();
-            for (int j = 0; j < 1000; j++)
+            for (int j = 0; j < 10000; j++)
                 deque.addFirst(UUID.randomUUID().toString());
         }
     }
