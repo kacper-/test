@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Primes {
     public static void main(String[] args) {
-        long from = 10000000000L;
-        long to = 10000001000L;
+        long from = 100000000L;
+        long to = 100010000L;
         int count = (int) (to - from);
         int[] a = new int[count];
 
@@ -23,11 +23,11 @@ public class Primes {
 
         long stop = new Date().getTime();
 
-        for (int i = 0; i < count; i++) {
-            if (a[i] == 0) {
-                System.out.println(from + i);
-            }
-        }
+//        for (int i = 0; i < count; i++) {
+//            if (a[i] == 0) {
+//                System.out.println(from + i);
+//            }
+//        }
         System.out.println("Time: " + (stop - start) + " ms");
     }
 }
