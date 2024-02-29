@@ -17,10 +17,10 @@ public class QueueTree {
         long start = new Date().getTime();
 
         for (int i = 0; i < 1000000; i++)
-            //map.put(uuids[i],uuids[i]);
-            queue.add(uuids[i]);
+            map.put(uuids[i],uuids[i]);
+            //queue.add(uuids[i]);
 
-        System.out.printf("adding time = %d", new Date().getTime() - start);
+        System.out.printf("adding time = %d\n", new Date().getTime() - start);
 
         for (int i = 0; i < 10; i++)
             System.out.println(queue.poll());
