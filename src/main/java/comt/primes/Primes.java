@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Primes {
     public static void main(String[] args) {
-        long from = 100000000L;
-        long to = 100010000L;
+        long from = 1000000000L;
+        long to = 1000100000L;
         int count = (int) (to - from);
         int[] a = new int[count];
 
