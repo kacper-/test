@@ -68,7 +68,7 @@ public class INGTest {
                 if (max.edges.contains(max2.vertex) || max2.edges.contains(max.vertex)) {
                     val = max.getSize() + max2.getSize() - 1;
                 } else {
-                    val = Math.max(max2.getSize(), max.getSize());
+                    val = 0;
                 }
 
                 if (val > realMax)
