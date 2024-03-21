@@ -7,27 +7,17 @@ import static org.junit.Assert.*;
 public class INGTestTest {
 
     @Test
-    public void solutionT1() {
+    public void testT1() {
 
     }
 
     @Test
-    public void solutionT2() {
+    public void testT2() {
 
     }
 
     @Test
-    public void solutionT3() {
-
-    }
-
-    @Test
-    public void solutionT4() {
-
-    }
-
-    @Test
-    public void solutionT5() {
+    public void testT3() {
 
     }
 }
