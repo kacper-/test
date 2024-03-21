@@ -1,6 +1,9 @@
 package comt.codility;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class INGTest {
     public static void main(String[] args) {
@@ -50,27 +53,27 @@ public class INGTest {
         for (int i = 0; i < N; i++)
             graph.get(B[i]).edges.add(A[i]);
 
-        PriorityQueue<Element> pq = new PriorityQueue<>(Comparator.comparing(Element::getSize));
-
-        for (Element e : graph.values()) {
-            pq.add(e);
-        }
-
-        Object[] arr = pq.toArray();
+        Object[] arr = graph.values().toArray();
 
         int realMax = 0;
         int val;
         for (int i = arr.length - 1; i > 0; i--) {
-            max = (Element) arr[i];
-            max2 = (Element) arr[i - 1];
+            for (int j = arr.length - 1; j > 0; j--) {
+                if (i == j)
+                    continue;
 
-            val = max.getSize() + max2.getSize();
+                max = (Element) arr[i];
+                max2 = (Element) arr[j];
 
-            if (max.edges.contains(max2.vertex))
-                val--;
+                if (max.edges.contains(max2.vertex) || max2.edges.contains(max.vertex)) {
+                    val = max.getSize() + max2.getSize() - 1;
+                } else {
+                    val = Math.max(max2.getSize(), max.getSize());
+                }
 
-            if (val > realMax)
-                realMax = val;
+                if (val > realMax)
+                    realMax = val;
+            }
         }
         return realMax;
     }
