@@ -27,7 +27,7 @@ public class INGTest {
     }
 
     public static int task2(int[] A) {
-
+        Map<Integer, Integer> map = new HashMap<>();
 
         return 1;
     }
@@ -39,56 +39,24 @@ public class INGTest {
         if (A.length == 0 || B.length == 0 || B.length != A.length)
             return 0;
 
-        Element max;
-        Element max2;
-
-        Map<Integer, Element> graph = new HashMap<>();
+        Map<Integer, Set<Integer>> graph = new HashMap<>();
         for (int i : A)
-            graph.putIfAbsent(i, new Element(i));
+            graph.putIfAbsent(i, new HashSet<>());
         for (int i : B)
-            graph.putIfAbsent(i, new Element(i));
+            graph.putIfAbsent(i, new HashSet<>());
 
-        for (int i = 0; i < N; i++)
-            graph.get(A[i]).edges.add(B[i]);
-        for (int i = 0; i < N; i++)
-            graph.get(B[i]).edges.add(A[i]);
+        for (int i = 0; i < A.length; i++)
+            graph.get(A[i]).add(B[i]);
+        for (int i = 0; i < B.length; i++)
+            graph.get(B[i]).add(A[i]);
 
-        Object[] arr = graph.values().toArray();
+        int max = 0;
 
-        int realMax = 0;
-        int val;
-        for (int i = arr.length - 1; i > 0; i--) {
-            for (int j = arr.length - 1; j > 0; j--) {
-                if (i == j)
-                    continue;
-
-                max = (Element) arr[i];
-                max2 = (Element) arr[j];
-
-                if (max.edges.contains(max2.vertex) || max2.edges.contains(max.vertex)) {
-                    val = max.getSize() + max2.getSize() - 1;
-                } else {
-                    val = 0;
-                }
-
-                if (val > realMax)
-                    realMax = val;
-            }
+        for (Set<Integer> set : graph.values()) {
+            for (int i : set)
+                    max = Math.max(max, set.size() + graph.get(i).size() - 1);
         }
-        return realMax;
+        return max;
     }
 
-    static class Element {
-
-        public Element(int vertex) {
-            this.vertex = vertex;
-        }
-
-        int vertex;
-        Set<Integer> edges = new HashSet<>();
-
-        public int getSize() {
-            return edges.size();
-        }
-    }
 }
