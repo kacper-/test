@@ -27,12 +27,12 @@ public class INGTest {
     }
 
     public static int task2(int[] A) {
-
+        Map<Integer, Integer> map = new HashMap<>();
 
         return 1;
     }
 
-    public static int task3(int[] A, int[] B, int N) {
+    public static int task3(int[] A, int B[], int N) {
         if (A == null || B == null)
             return 0;
 
@@ -45,15 +45,16 @@ public class INGTest {
         for (int i : B)
             graph.putIfAbsent(i, new HashSet<>());
 
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < A.length; i++)
             graph.get(A[i]).add(B[i]);
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < B.length; i++)
             graph.get(B[i]).add(A[i]);
 
         int max = 0;
-        for (int i : graph.keySet()) {
-            for (int j : graph.get(i))
-                max = Math.max(max, graph.get(i).size() + graph.get(j).size() - 1);
+
+        for (Set<Integer> set : graph.values()) {
+            for (int i : set)
+                    max = Math.max(max, set.size() + graph.get(i).size() - 1);
         }
         return max;
     }
