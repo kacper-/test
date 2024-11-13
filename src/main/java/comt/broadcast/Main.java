@@ -8,6 +8,6 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        new Thread(new Sender()).start();
+        new Thread(new Sender()).start();
     }
 }
