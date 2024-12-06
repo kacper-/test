@@ -14,6 +14,7 @@ public class Main {
             long start = new Date().getTime();
             while (threadCounter.get() < 10) {
                 System.out.println("count = " + Thread.activeCount());
+                System.out.println("group count = " + Thread.currentThread().getThreadGroup().activeGroupCount());
                 try {
                     Thread.sleep(250);
                 } catch (InterruptedException e) {
@@ -30,7 +31,7 @@ public class Main {
     }
 
     static void start(final int k) {
-        Thread.ofPlatform().start(() -> {
+        Thread.ofVirtual().start(() -> {
             int n = k;
             double a = (n + 2);
             for (int i = 0; i < 50; i++) {
