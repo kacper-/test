@@ -1,20 +1,23 @@
 package comt.vthreads;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
 
-    static AtomicInteger threadCounter = new AtomicInteger(0);
+    static AtomicInteger threadStarted = new AtomicInteger(0);
+    static AtomicInteger threadFinished = new AtomicInteger(0);
 
     static int k;
+    static ThreadMXBean mx = ManagementFactory.getThreadMXBean();
 
     public static void main(String args[]) {
         new Thread(() -> {
             long start = new Date().getTime();
-            while (threadCounter.get() < 10) {
-                System.out.println("count = " + Thread.activeCount());
-                System.out.println("group count = " + Thread.currentThread().getThreadGroup().activeGroupCount());
+            while (threadFinished.get() < 10) {
+                System.out.printf("count = %d / %d%n", threadStarted.get() - threadFinished.get(), mx.getAllThreadIds().length);
                 try {
                     Thread.sleep(250);
                 } catch (InterruptedException e) {
@@ -32,6 +35,7 @@ public class Main {
 
     static void start(final int k) {
         Thread.ofVirtual().start(() -> {
+            threadStarted.incrementAndGet();
             int n = k;
             double a = (n + 2);
             for (int i = 0; i < 50; i++) {
@@ -45,7 +49,7 @@ public class Main {
                 }
             }
             System.out.println("Thread " + n + " finished with = " + a);
-            threadCounter.incrementAndGet();
+            threadFinished.incrementAndGet();
         });
     }
 }
