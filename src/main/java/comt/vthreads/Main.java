@@ -13,7 +13,7 @@ public class Main {
     static int k;
     static ThreadMXBean mx = ManagementFactory.getThreadMXBean();
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         new Thread(() -> {
             long start = new Date().getTime();
             while (threadFinished.get() < 10) {
