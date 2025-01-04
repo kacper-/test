@@ -9,6 +9,7 @@ public class Main {
 
     static AtomicInteger threadStarted = new AtomicInteger(0);
     static AtomicInteger threadFinished = new AtomicInteger(0);
+    static AtomicInteger active = new AtomicInteger(0);
 
     static int k;
     static ThreadMXBean mx = ManagementFactory.getThreadMXBean();
@@ -17,7 +18,7 @@ public class Main {
         new Thread(() -> {
             long start = new Date().getTime();
             while (threadFinished.get() < 10) {
-                System.out.printf("count = %d / %d%n", threadStarted.get() - threadFinished.get(), mx.getAllThreadIds().length);
+                System.out.printf("count = %d / %d active = %d %n", threadStarted.get() - threadFinished.get(), mx.getAllThreadIds().length, active.get());
                 try {
                     Thread.sleep(250);
                 } catch (InterruptedException e) {
@@ -36,6 +37,7 @@ public class Main {
     static void start(final int k) {
         Thread.ofVirtual().start(() -> {
             threadStarted.incrementAndGet();
+            active.incrementAndGet();
             int n = k;
             double a = (n + 2);
             for (int i = 0; i < 50; i++) {
@@ -43,7 +45,9 @@ public class Main {
                     for (int j = 0; j < 10000000; j++) {
                         a += Math.log(a);
                     }
+                    active.decrementAndGet();
                     Thread.sleep(8 + (12 * (long) n));
+                    active.incrementAndGet();
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
