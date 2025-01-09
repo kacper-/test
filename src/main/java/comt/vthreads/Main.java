@@ -52,6 +52,7 @@ public class Main {
                     throw new RuntimeException(e);
                 }
             }
+            active.decrementAndGet();
             System.out.println("Thread " + n + " finished with = " + a);
             threadFinished.incrementAndGet();
         });
