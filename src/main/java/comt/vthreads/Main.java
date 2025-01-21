@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
 
+    static final int THREADS = 8;
     static AtomicInteger threadStarted = new AtomicInteger(0);
     static AtomicInteger threadFinished = new AtomicInteger(0);
     static AtomicInteger active = new AtomicInteger(0);
@@ -17,8 +18,8 @@ public class Main {
     public static void main(String[] args) {
         new Thread(() -> {
             long start = new Date().getTime();
-            while (threadFinished.get() < 10) {
-                System.out.printf("count = %d / %d active = %d %n", threadStarted.get() - threadFinished.get(), mx.getAllThreadIds().length, active.get());
+            while (threadFinished.get() < THREADS) {
+                System.out.printf("count = [%d/%d] active = %d %n", threadStarted.get() - threadFinished.get(), mx.getAllThreadIds().length, active.get());
                 try {
                     Thread.sleep(250);
                 } catch (InterruptedException e) {
@@ -29,13 +30,13 @@ public class Main {
             System.out.println("time = " + (stop - start));
         }).start();
 
-        for (k = 0; k < 10; k++) {
+        for (k = 0; k < THREADS; k++) {
             start(k);
         }
     }
 
     static void start(final int k) {
-        Thread.ofVirtual().start(() -> {
+        Thread.ofPlatform().start(() -> {
             threadStarted.incrementAndGet();
             active.incrementAndGet();
             int n = k;
@@ -53,7 +54,7 @@ public class Main {
                 }
             }
             active.decrementAndGet();
-            System.out.println("Thread " + n + " finished with = " + a);
+            System.out.println("\t\tThread " + n + " finished with = " + a);
             threadFinished.incrementAndGet();
         });
     }
